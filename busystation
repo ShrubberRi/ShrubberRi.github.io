@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+#busystation
+#
+#purpose:   script calculates the busiest times (number of trains per hour)
+#           for a user selected station and day
+#usage:     ./busystation stationname day
+
+    STATION=$1
+    DAY=$2
+    grep "stn=$STATION" sched | grep "day=$DAY" | cut -d";" -f4 | \
+        cut -c 4,5 | sort -g | uniq -c | sort --reverse | head -n 1 |\
+        cut -c 9,10 | { bc |tr -d '\n' ; echo "00 hours"; }
+
+
